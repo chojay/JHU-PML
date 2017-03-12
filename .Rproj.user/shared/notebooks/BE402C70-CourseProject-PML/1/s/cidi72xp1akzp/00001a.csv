@@ -1,0 +1,8 @@
+"0","# train <- subset(train, select = -c(user_name))"
+"0","inTrain <- createDataPartition(train$classe, p = 0.7, list = FALSE)"
+"0","train_data <- train[inTrain,]"
+"0","valid_data <- train[-inTrain,]"
+"0","# mod1 <- train(classe ~ . , method = ""glm"", data=train_data, na.action = na.exclude)"
+"0","mod2 <- train(classe ~ . , method = ""rf"", data=train_data, trControl = trainControl(method = ""cv""), number = 3, na.action = na.exclude)"
+"2","
+"

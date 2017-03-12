@@ -1,0 +1,4 @@
+"0","(1-max(rf_model$results$Accuracy)) * 100 
+"
+"2","Error: object 'rf_model' not found
+"

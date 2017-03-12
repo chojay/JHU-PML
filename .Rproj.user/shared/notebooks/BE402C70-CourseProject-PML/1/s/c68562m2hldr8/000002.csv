@@ -1,0 +1,8 @@
+"0","library(tidyverse)"
+"0","library(caret)"
+"0","#Load Training Data"
+"0","train <- read.csv(""https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv"") %>% "
+"0","  select(-X) #Remove row index"
+"0","#Load Test Data"
+"0","test <- read.csv(""https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv"") %>%"
+"0","  select(-X) #Remove row index"

@@ -1,0 +1,23 @@
+"0","rf_model <- train(classe ~ . , method = ""rf"", data=train, trControl = trainControl(method = ""cv""), number = 4, na.action = na.exclude)"
+"2","Loading required package: randomForest
+"
+"2","randomForest 4.6-12
+"
+"2","Type rfNews() to see new features/changes/bug fixes.
+"
+"2","
+Attaching package: ‘randomForest’
+
+"
+"2","The following object is masked from ‘package:dplyr’:
+
+    combine
+
+"
+"2","The following object is masked from ‘package:ggplot2’:
+
+    margin
+
+"
+"2","
+"

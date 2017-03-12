@@ -1,0 +1,5 @@
+"0","test <- test %>%"
+"0","  mutate(cvtd_timestamp = lubridate::dmy_hm(cvtd_timestamp))"
+"0","train <- train %>% mutate(cvtd_timestamp = lubridate::dmy_hm(cvtd_timestamp))"
+"0","#Need to change timestamp to month date year"
+"0","train"

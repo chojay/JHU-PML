@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "---\ntitle: \"Practical Machine Learning Course Project\"\nauthor: \"Jay Cho\"\ndate: \"March 11, 2017\"\noutput: html_document\n---\n\n#Libraries used\n```{r, message=FALSE}\nlibrary(tidyverse)\nlibrary(caret)\n```\n\n# Data Loading & Data Exploratation\n\n```{r}\n#Load Training Data\ntrain <- read.csv(\"https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv\")\n\n#Load Test Data\ntest <- read.csv(\"https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv\")\n\n```\n\n# Data Pre-Processing: Removing non-zero variance columns\n\nThe next step would be is to pre-process data further. I'll first remove near zero variance columns using [nzv function from the caret package](https://topepo.github.io/caret/pre-processing.html). \n```{r}\nnzv <- nearZeroVar(train, saveMetrics = TRUE) #Identifying \nsum(nzv$nzv) #Checking how many near zero variance columns exist\n\ntrain <- train[,nzv$nzv == FALSE] #Keeping the columns that are non near-zero variances for the train set\ntest <- test[,nzv$nzv == FALSE] #Keeping the columns that are non near-zero variances for the test set\n\n# head(train); head(test)\n```\n# Removing NA columns\nLooks like there are many columns with 'NA's. Keeping them will interfere with our model so we'll remove those before fitting a model:\n```{r}\ncol_to_remove <- names(train)[colSums(is.na(train)>0) > 0] #Find na values, run a column sum, change to logical values for those with total sum greater than 0\n\ntrain <- train[, !colnames(train) %in% col_to_remove] #Removing columns with NA values\n```\n\n\n# Fitting a model : Random Forest\nWe've learned in the class that [Random Forest (RF)](https://en.wikipedia.org/wiki/Random_forest) is one of the more powerful classification technique owing to its emsembled outcome. As such I will try to fit the random forest model first:\n\n```{r}\n#Will fit a RF model with 10 cross-validation. Let's create a control parameter:\ncontrol_param <- trainControl(method = \"cv\", number = 4)\n\n#Fitting a random forest model:\nrf_model <- train(classe ~ ., data = train, method = \"rf\", trControl = control_param)\n\n#Model Evaluation\nrf_model\nconfusionMatrix(rf_model)\n```\nFinal model has much less than 1% in-sample error rate, so we can conclude the random forest model should be good enough to be tested on the test set. Let's predict on test-set. \n\n##Expected out of sample rate:\nIf we assume the model will predict at its best accuracy, we can estimate the out-of-sample error percent as: (1 - max accuracy) * 100\n```{r}\n(1-max(rf_model$results$Accuracy)) * 100 \n```\n\n# Prediction on the test set  \n```{r}\ntest <- test[, !colnames(test) %in% col_to_remove] #Removing the same NA columns before fitting the RF model\ntest_prediction <- predict(rf_model, newdata = test)\ntest_prediction\n```\n\n\n\n\n\n\n\n",
+    "created" : 1489290031915.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "482867233",
+    "id" : "C5D00322",
+    "lastKnownWriteTime" : 1489301631,
+    "last_content_update" : 1489301631333,
+    "path" : "C:/Users/choje2/Google Drive/Personal/MOOCs/2017/Coursera/Practical Machine Learning/CourseProject-PML/PracticalMachineLearning.Rmd",
+    "project_path" : "PracticalMachineLearning.Rmd",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
